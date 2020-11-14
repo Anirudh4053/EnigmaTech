@@ -91,7 +91,8 @@ class ListFragment : Fragment() {
                 if (data != null) {
                     val refresh = data.getBooleanExtra("refresh",false)
                     if(refresh){
-                        println("Refresh new fragment")
+                        itemList.clear()
+                        dashboardViewModel.readData()
                     }
                 }
             }

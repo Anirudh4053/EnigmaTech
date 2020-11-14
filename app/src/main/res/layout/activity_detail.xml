@@ -9,13 +9,13 @@
 
     <ImageView
         android:id="@+id/backBtn"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back" />
+        android:src="@drawable/ic_back" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fnameInputLayout"
@@ -25,6 +25,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
+        android:theme="@style/InputLayout"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:layout_constraintBottom_toTopOf="@+id/lnameInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +38,7 @@
             android:id="@+id/fnamEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapWords"
             android:hint="First name" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,6 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
+        android:theme="@style/InputLayout"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:layout_constraintBottom_toTopOf="@+id/ageInputLayout"
         app:layout_constraintEnd_toEndOf="@+id/fnameInputLayout"
         app:layout_constraintStart_toStartOf="@+id/fnameInputLayout"
@@ -53,6 +60,7 @@
             android:id="@+id/lnameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapWords"
             android:hint="Surname" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,7 +70,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:theme="@style/InputLayout"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/submitBtn"
         app:layout_constraintEnd_toEndOf="@+id/lnameInputLayout"
         app:layout_constraintStart_toStartOf="@+id/lnameInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/lnameInputLayout">
@@ -71,19 +82,32 @@
             android:id="@+id/ageEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="Age" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/submitBtn"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dm_btn_ht"
         android:layout_marginTop="16dp"
-        android:text="Button"
+        android:backgroundTint="@color/bottomBarColor"
+        android:text="Submit"
         android:textColor="@color/white"
-        android:background="@color/bottomBarColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/ageInputLayout"
         app:layout_constraintStart_toStartOf="@+id/ageInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/ageInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/ageInputLayout"
+        tools:targetApi="lollipop" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

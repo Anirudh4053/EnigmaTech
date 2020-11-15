@@ -39,11 +39,15 @@ class ListFragment : Fragment(), KodeinAware {
         dashboardViewModel = ViewModelProvider(this,factory).get(ListViewModel::class.java)
         //val textView: TextView = root.findViewById(R.id.text_dashboard)
         activityVal = (activity as HomeActivity)
+
+        val fab: View = root.findViewById(R.id.fabAddBtn)
+        //fab.setOnClickListener(null)
+
+        fab.setOnClickListener {
+            val i = Intent(activityVal,DetailActivity::class.java)
+            startActivityForResult(i,NEW_CODE)
+        }
         root.apply {
-            this.fabAddBtn.setOnClickListener {
-                val i = Intent(activityVal,DetailActivity::class.java)
-                startActivityForResult(i,NEW_CODE)
-            }
             recyclerView.layoutManager = LinearLayoutManager(activityVal)
             adapter = DashAdapter(activityVal,itemList) {
                 println("All list clicked")

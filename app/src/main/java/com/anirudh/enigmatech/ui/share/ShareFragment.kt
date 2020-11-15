@@ -22,10 +22,6 @@ class ShareFragment : Fragment() {
         notificationsViewModel =
             ViewModelProvider(this).get(ShareViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_share, container, false)
-        /*val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })*/
         return root
     }
 }

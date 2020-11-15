@@ -25,5 +25,13 @@ class HomeActivity : AppCompatActivity() {
         )
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navView.setOnNavigationItemReselectedListener {
+            // Do nothing to ignore the reselection
+            if(it.itemId == R.id.navigation_home) {
+                println("Home")
+            }
+        }
+
     }
 }

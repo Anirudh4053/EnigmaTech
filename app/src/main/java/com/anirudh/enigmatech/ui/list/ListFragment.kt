@@ -18,24 +18,27 @@ import com.anirudh.enigmatech.data.model.User
 import com.anirudh.enigmatech.ui.detail.DetailActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_list.view.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), KodeinAware {
     private val TAG = HomeActivity::class.java.simpleName
     private lateinit var adapter: DashAdapter
     private lateinit var dashboardViewModel: ListViewModel
     private lateinit var activityVal: HomeActivity
     private val itemList = arrayListOf<User>()
     private lateinit var realm: Realm
+    override val kodein by kodein()
+    private val factory by instance<ListViewModelFactory>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dashboardViewModel =
-            ViewModelProvider(this).get(ListViewModel::class.java)
+
+        //dashboardViewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_list, container, false)
+        dashboardViewModel = ViewModelProvider(this,factory).get(ListViewModel::class.java)
         //val textView: TextView = root.findViewById(R.id.text_dashboard)
         activityVal = (activity as HomeActivity)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            println("Dashboard $it")
-            //textView.text = it
-        })
         root.apply {
             this.fabAddBtn.setOnClickListener {
                 val i = Intent(activityVal,DetailActivity::class.java)
@@ -51,37 +54,8 @@ class ListFragment : Fragment() {
                 itemList.addAll(it)
                 adapter.notifyDataSetChanged()
             })
-            /*realm = Realm.getDefaultInstance()
-
-            realm.beginTransaction()
-            //added to delete the db once the activity is created. Only use this if required
-            //realm.deleteAll()
-            //saveData()
-            realm.commitTransaction()
-            readData()*/
         }
         return root
-    }
-    private fun saveData() {
-        realm.executeTransactionAsync ({
-            val user = it.createObject(User::class.java)
-            user.fname = "Anirudh"
-            user.lname = "kolgaonkar"
-            user.age = 26
-        },{
-            Log.d(TAG,"On Success: Data Written Successfully!")
-            readData()
-        },{
-            Log.d(TAG,"On Error: Error in saving Data!")
-        })
-    }
-
-    private fun readData() {
-        val students = realm.where(User::class.java).findAll()
-        students.forEach {
-            itemList.add(it)
-        }
-        adapter.notifyDataSetChanged()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

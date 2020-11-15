@@ -4,29 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.anirudh.enigmatech.data.model.User
+import com.anirudh.enigmatech.data.repository.MainRepository
 import io.realm.Realm
 
-class ListViewModel : ViewModel() {
-    private var realm: Realm = Realm.getDefaultInstance()
+class ListViewModel(private val repository: MainRepository) : ViewModel() {
     var userList = MutableLiveData<List<User>>()
 
-    init {
-        realm.beginTransaction()
-        realm.commitTransaction()
-        //readData()
-    }
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
-
     fun readData() {
-        val users = realm.where(User::class.java).findAll()
-        val userArr = arrayListOf<User>()
-        users.forEach {
-            userArr.add(it)
-        }
-        userList.value = userArr
+        repository.readData(object : MainRepository.OnData{
+            override fun onSuccess() {
+
+            }
+
+            override fun onSuccessAllList(itemArr: List<User>) {
+                userList.value = itemArr
+            }
+
+            override fun onFailure(msg: String) {
+
+            }
+
+        })
     }
 }
